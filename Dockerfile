@@ -9,6 +9,9 @@ ARG TORCH_VERSION
 LABEL build_version="ImageGenius Version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="hydazz, martabal"
 
+# environment settings
+ENV PIP_FLAGS="-U --no-cache-dir"
+
 RUN \
   echo "**** install runtime packages ****" && \
   apt-get update && \
@@ -31,7 +34,7 @@ RUN \
     /tmp/immich --strip-components=1 && \
   echo "**** build machine-learning ****" && \
   cd /tmp/immich/machine-learning && \ 
-  pip install -U --no-cache-dir \
+  pip install ${PIP_FLAGS} \
     fastapi \
     insightface \
     nltk \
