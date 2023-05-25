@@ -6,7 +6,7 @@ mkdir -p /config/machine-learning
 cp /defaults/main.py /app/immich/machine-learning/src/main.py
 
 # install/update pip packages to /config venv
-pip install -U --no-cache-dir --extra-index-url https://download.pytorch.org/whl/cu117 \
+pip install ${PIP_FLAGS} --extra-index-url https://download.pytorch.org/whl/cu117 \
     torch==${TORCH_VERSION} \
     torchvision==0.14.1
 

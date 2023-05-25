@@ -9,6 +9,9 @@ ARG TORCH_VERSION
 LABEL build_version="ImageGenius Version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="hydazz, martabal"
 
+# environment settings
+ENV PIP_FLAGS="--break-system-packages -U --no-cache-dir"
+
 RUN \
   echo "**** install runtime packages ****" && \
   apt-get update && \
@@ -36,7 +39,7 @@ RUN \
     /tmp/immich --strip-components=1 && \
   echo "**** build machine-learning ****" && \
   cd /tmp/immich/machine-learning && \
-  pip install --break-system-packages -U --no-cache-dir --pre -f https://download.pytorch.org/whl/nightly/cpu/torch_nightly.html \
+  pip install ${PIP_FLAGS} \
     coloredlogs \
     flatbuffers \
     insightface \
@@ -46,9 +49,8 @@ RUN \
     scipy \
     sentence-transformers \
     sympy \
-    torch \
     transformers && \
-  pip install -U --no-cache-dir --index-url https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/ORT-Nightly/pypi/simple/ \
+  pip install ${PIP_FLAGS} --index-url https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/ORT-Nightly/pypi/simple/ \
     ort-nightly-gpu && \
   mkdir -p \
     /app/immich/machine-learning && \
