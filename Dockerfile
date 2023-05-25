@@ -49,6 +49,8 @@ RUN \
     tqdm \
     transformers \
     uvicorn[standard] && \
+  pip install ${PIP_FLAGS} --index-url https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/ORT-Nightly/pypi/simple/ \
+    ort-nightly-gpu && \
   mkdir -p \
     /app/immich/machine-learning && \
   cp -a \
