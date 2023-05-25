@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-FROM ghcr.io/imagegenius/baseimage-ubuntu:lunar
+FROM ghcr.io/imagegenius/baseimage-ubuntu:jammy
 
 # set version label
 ARG BUILD_DATE
@@ -14,15 +14,10 @@ RUN \
   apt-get update && \
   apt-get install --no-install-recommends -y \
     g++ \
+    make \
+    nvidia-cuda-toolkit \
     python3-dev \
-    python3-fastapi \
-    python3-nltk \
-    python3-numpy \
-    python3-pil \
-    python3-pip \
-    python3-sentencepiece \
-    python3-tqdm \
-    python3-uvicorn && \
+    python3-venv && \
   echo "**** download immich ****" && \
   mkdir -p \
     /tmp/immich && \
@@ -35,27 +30,41 @@ RUN \
     /tmp/immich.tar.gz -C \
     /tmp/immich --strip-components=1 && \
   echo "**** build machine-learning ****" && \
-  cd /tmp/immich/machine-learning && \
-  pip install --break-system-packages -U --no-cache-dir --pre -f https://download.pytorch.org/whl/nightly/cpu/torch_nightly.html \
-    coloredlogs \
-    flatbuffers \
+  cd /tmp/immich/machine-learning && \ 
+  python3 -m venv /lsiopy/venv && \
+  /lsiopy/venv/bin/pip install -U --no-cache-dir --extra-index-url https://download.pytorch.org/whl/cu117 \
+    torch==1.13.1 \
+    torchvision==0.14.1 && \
+  /lsiopy/venv/bin/pip install -U --no-cache-dir \
+    fastapi \
     insightface \
+    nltk \
+    numpy \
+    onnxruntime-gpu \
     packaging \
-    protobuf \
+    Pillow \
     scikit-learn \
     scipy \
+    sentencepiece \
     sentence-transformers \
-    sympy \
-    torch \
-    transformers && \
-  pip install -U --no-cache-dir --index-url https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/ORT-Nightly/pypi/simple/ \
-    ort-nightly-gpu && \
-  mkdir -p \
-    /app/immich/machine-learning && \
-  cp -a \
-    src \
-    /app/immich/machine-learning && \
+    tqdm \
+    transformers \
+    uvicorn[standard] && \
+    mkdir -p \
+      /app/immich/machine-learning && \
+    cp -a \
+      src \
+      /app/immich/machine-learning && \
   echo "**** cleanup ****" && \
+  for cleanfiles in *.pyc *.pyo; do \
+    find /usr/local/lib/python3.* /usr/lib/python3.* -name "${cleanfiles}" -delete; \
+  done && \
+  apt-get remove -y --purge \
+    g++ \
+    make \
+    python3-dev && \
+  apt-get autoremove -y --purge && \
+  apt-get clean && \
   rm -rf \
     /tmp/* \
     /var/tmp/* \
