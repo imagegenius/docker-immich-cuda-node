@@ -33,19 +33,17 @@ RUN \
     /tmp/immich.tar.gz -C \
     /tmp/immich --strip-components=1 && \
   echo "**** build machine-learning ****" && \
-  cd /tmp/immich/machine-learning && \ 
+  cd /tmp/immich/machine-learning && \
   pip install ${PIP_FLAGS} \
+    Pillow \
     fastapi \
     insightface \
     nltk \
     numpy \
     onnxruntime-gpu \
     packaging \
-    Pillow \
     scikit-learn \
     scipy \
-    sentencepiece \
-    sentence-transformers \
     tqdm \
     transformers \
     uvicorn[standard] && \
@@ -60,10 +58,6 @@ RUN \
   for cleanfiles in *.pyc *.pyo; do \
     find /usr/local/lib/python3.* /usr/lib/python3.* -name "${cleanfiles}" -delete; \
   done && \
-  apt-get remove -y --purge \
-    g++ \
-    make \
-    python3-dev && \
   apt-get autoremove -y --purge && \
   apt-get clean && \
   rm -rf \
@@ -77,7 +71,8 @@ COPY root/ /
 # environment settings
 ENV HOME="/config" \
   MACHINE_LEARNING_CACHE_FOLDER="/config/machine-learning" \
-  TORCH_VERSION=${TORCH_VERSION}
+  TORCH_VERSION=${TORCH_VERSION} \
+  PATH="/config/.local/bin:$PATH"
 
 # ports and volumes
 EXPOSE 3003

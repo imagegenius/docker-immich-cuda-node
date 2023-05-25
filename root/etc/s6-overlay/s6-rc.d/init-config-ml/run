@@ -5,14 +5,15 @@ mkdir -p /config/machine-learning
 # apply early ml support
 cp /defaults/main.py /app/immich/machine-learning/src/main.py
 
-# install/update pip packages to /config venv
-pip install ${PIP_FLAGS} --extra-index-url https://download.pytorch.org/whl/cu117 \
-    torch==${TORCH_VERSION} \
-    torchvision==0.14.1
+# install/update pip packages in /config
+s6-setuidgid abc \
+    pip install ${PIP_FLAGS} --extra-index-url https://download.pytorch.org/whl/cu117 \
+        sentence-transformers \
+        sentencepiece \
+        torch==${TORCH_VERSION} \
+        torchvision==0.14.1
 
 # permissions
 chown -R abc:abc \
-    config \
-    /photos \
-    /run/immich \
-    /app/typesense
+    /config \
+    /app

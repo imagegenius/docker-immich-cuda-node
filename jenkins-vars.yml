@@ -3,7 +3,7 @@
 # jenkins variables
 project_name: docker-immich-cuda-node
 external_type: na
-custom_version_command: "echo '1.13.1'"
+custom_version_command: "echo '1.13.1'" # torch version
 release_type: stable
 release_tag: latest
 ig_branch: main
@@ -14,7 +14,7 @@ repo_vars:
   - CONTAINER_NAME = 'immich-cuda-node'
   - DIST_IMAGE = 'ubuntu'
   - MULTIARCH = 'false'
-  - CI = 'false'
+  - CI = 'true'
   - CI_WEB = 'false'
   - CI_PORT = '80'
   - CI_SSL = 'false'
