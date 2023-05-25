@@ -6,7 +6,6 @@ FROM ghcr.io/imagegenius/baseimage-ubuntu:jammy
 ARG BUILD_DATE
 ARG VERSION
 ARG TORCH_VERSION
-ARG TORCHVISION_VERSION
 LABEL build_version="ImageGenius Version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="hydazz, martabal"
 
@@ -33,9 +32,6 @@ RUN \
   echo "**** build machine-learning ****" && \
   cd /tmp/immich/machine-learning && \ 
   python3 -m venv /lsiopy/venv && \
-  /lsiopy/venv/bin/pip install -U --no-cache-dir --extra-index-url https://download.pytorch.org/whl/cu117 \
-    torch==${TORCH_VERSION} \
-    torchvision==${TORCHVISION_VERSION} && \
   /lsiopy/venv/bin/pip install -U --no-cache-dir \
     fastapi \
     insightface \
