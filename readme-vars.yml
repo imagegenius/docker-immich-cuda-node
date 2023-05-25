@@ -24,8 +24,6 @@ param_ports:
   - { external_port: "3003", internal_port: "3003", port_desc: "WebUI Port" }
 param_device_map: false
 cap_add_param: false
-custom_params:
-  - { name: "gpus", value: "all" }
 
 # optional container parameters
 opt_param_usage_include_env: false
@@ -41,7 +39,18 @@ unraid_template: false
 # application setup block
 app_setup_block_enabled: true
 app_setup_block: |
-  ...
+  To start the image with a GPU, you need to add `--gpus=all` to the docker CLI command, or:
+
+  ```yaml
+      deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
+  ```
+
+  to your docker compose
 
 # changelog
 changelogs:
