@@ -1,0 +1,18 @@
+#!/usr/bin/with-contenv bash
+
+mkdir -p /config/machine-learning
+
+# apply early ml support
+cp /defaults/main.py /app/immich/machine-learning/src/main.py
+
+# install/update pip packages to /config venv
+pip install -U --no-cache-dir --extra-index-url https://download.pytorch.org/whl/cu117 \
+    torch==${TORCH_VERSION} \
+    torchvision==0.14.1
+
+# permissions
+chown -R abc:abc \
+    config \
+    /photos \
+    /run/immich \
+    /app/typesense

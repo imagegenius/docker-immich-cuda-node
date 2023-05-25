@@ -1,0 +1,48 @@
+---
+# project information
+project_name: immich-cuda-node
+project_url: "https://github.com/imagegenius/docker-immich-cuda-node"
+project_logo: "https://avatars.githubusercontent.com/u/121947548?s=200&v=4"
+project_blurb: "immich-cuda-node is a remote machine leaning worker for Immich"
+project_github_repo_url: "https://github.com/imagegenius/docker-{{ project_name }}"
+project_blurb_optional_extras_enabled: false
+
+# supported architectures
+available_architectures:
+  - { arch: "{{ arch_x86_64 }}", tag: "amd64-latest" }
+
+# container parameters
+common_param_env_vars_enabled: true
+param_container_name: "{{ project_name }}"
+param_usage_include_net: false
+param_usage_include_env: false
+param_usage_include_vols: true
+param_volumes:
+  - { vol_path: "/config", vol_host_path: "path_to_appdata", desc: "Location where `torch` (CUDA version) + other larger packages will be installed, which will use ~1.5GB" }
+param_usage_include_ports: true
+param_ports:
+  - { external_port: "3003", internal_port: "3003", port_desc: "WebUI Port" }
+param_device_map: false
+cap_add_param: false
+custom_params:
+  - { name: "gpus", value: "all" }
+
+# optional container parameters
+opt_param_usage_include_env: false
+opt_param_usage_include_vols: false
+opt_param_usage_include_ports: false
+opt_param_device_map: false
+opt_cap_add_param: false
+optional_block_1: false
+
+# disable unraid template till container works
+unraid_template: false
+
+# application setup block
+app_setup_block_enabled: true
+app_setup_block: |
+  ...
+
+# changelog
+changelogs:
+  - { date: "25.05.23:", desc: "Initial Release." }

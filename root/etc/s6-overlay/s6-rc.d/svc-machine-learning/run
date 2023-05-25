@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv bash
+
+exec \
+    cd /app/immich/machine-learning s6-setuidgid abc \
+       python3 src/main.py
