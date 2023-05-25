@@ -17,7 +17,7 @@ RUN \
     make \
     nvidia-cuda-toolkit \
     python3-dev \
-    python3-venv && \
+    python3-pip && \
   echo "**** download immich ****" && \
   mkdir -p \
     /tmp/immich && \
@@ -31,8 +31,7 @@ RUN \
     /tmp/immich --strip-components=1 && \
   echo "**** build machine-learning ****" && \
   cd /tmp/immich/machine-learning && \ 
-  python3 -m venv /lsiopy/venv && \
-  /lsiopy/venv/bin/pip install -U --no-cache-dir \
+  pip install -U --no-cache-dir \
     fastapi \
     insightface \
     nltk \
