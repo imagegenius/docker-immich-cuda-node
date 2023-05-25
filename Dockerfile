@@ -6,6 +6,7 @@ FROM ghcr.io/imagegenius/baseimage-ubuntu:jammy
 ARG BUILD_DATE
 ARG VERSION
 ARG TORCH_VERSION
+ARG TORCHVISION_VERSION
 LABEL build_version="ImageGenius Version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="hydazz, martabal"
 
@@ -33,8 +34,8 @@ RUN \
   cd /tmp/immich/machine-learning && \ 
   python3 -m venv /lsiopy/venv && \
   /lsiopy/venv/bin/pip install -U --no-cache-dir --extra-index-url https://download.pytorch.org/whl/cu117 \
-    torch==1.13.1 \
-    torchvision==0.14.1 && \
+    torch==${TORCH_VERSION} \
+    torchvision==${TORCHVISION_VERSION} && \
   /lsiopy/venv/bin/pip install -U --no-cache-dir \
     fastapi \
     insightface \
@@ -50,11 +51,11 @@ RUN \
     tqdm \
     transformers \
     uvicorn[standard] && \
-    mkdir -p \
-      /app/immich/machine-learning && \
-    cp -a \
-      src \
-      /app/immich/machine-learning && \
+  mkdir -p \
+    /app/immich/machine-learning && \
+  cp -a \
+    src \
+    /app/immich/machine-learning && \
   echo "**** cleanup ****" && \
   for cleanfiles in *.pyc *.pyo; do \
     find /usr/local/lib/python3.* /usr/lib/python3.* -name "${cleanfiles}" -delete; \
