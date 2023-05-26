@@ -17,8 +17,11 @@ RUN \
   apt-get update && \
   apt-get install --no-install-recommends -y \
     g++ \
-    make \
-    nvidia-cuda-toolkit \
+    libcublas11 \
+    libcublaslt11 \
+    libcurand10 \
+    libcufft10 \
+    libcudart11.0 \
     python3-dev \
     python3-pip && \
   echo "**** download immich ****" && \
@@ -35,20 +38,18 @@ RUN \
   echo "**** build machine-learning ****" && \
   cd /tmp/immich/machine-learning && \
   pip install ${PIP_FLAGS} \
-    Pillow \
-    fastapi \
     insightface \
+    fastapi \
     nltk \
     numpy \
     onnxruntime-gpu \
-    packaging \
+    Pillow \
     scikit-learn \
     scipy \
+    sentence-transformers \
     tqdm \
     transformers \
     uvicorn[standard] && \
-  pip install ${PIP_FLAGS} --index-url https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/ORT-Nightly/pypi/simple/ \
-    ort-nightly-gpu && \
   mkdir -p \
     /app/immich/machine-learning && \
   cp -a \
@@ -58,6 +59,9 @@ RUN \
   for cleanfiles in *.pyc *.pyo; do \
     find /usr/local/lib/python3.* /usr/lib/python3.* -name "${cleanfiles}" -delete; \
   done && \
+  apt-get remove -y --purge \
+    g++ \
+    python3-dev && \
   apt-get autoremove -y --purge && \
   apt-get clean && \
   rm -rf \

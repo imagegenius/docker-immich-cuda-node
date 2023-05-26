@@ -5,6 +5,13 @@ mkdir -p /config/machine-learning
 # apply early ml support
 cp /defaults/main.py /app/immich/machine-learning/src/main.py
 
+if [ ! -f /config/lib/libcudnn.deb  ]; then
+    curl -o  \
+        /config/lib/libcudnn.deb -L \
+        https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/libcudnn8_8.5.0.96-1+cuda11.7_amd64.deb
+fi
+dpkg -i /config/lib/libcudnn.deb
+
 # install/update pip packages in /config
 s6-setuidgid abc \
     pip install ${PIP_FLAGS} --extra-index-url https://download.pytorch.org/whl/cu117 \
