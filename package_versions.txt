@@ -42,7 +42,7 @@ easydict                   1.10                               python
 fastapi                    0.91.0                             python  
 filelock                   3.12.0                             python  
 findutils                  4.9.0-3ubuntu1                     deb     
-flatbuffers                23.5.9                             python  
+flatbuffers                23.5.26                            python  
 fonttools                  4.39.4                             python  
 fsspec                     2023.5.0                           python  
 g++                        4:12.2.0-3ubuntu1                  deb     
@@ -65,10 +65,10 @@ grep                       3.8-5                              deb
 gzip                       1.12-1ubuntu1                      deb     
 h11                        0.14.0                             python  
 hostname                   3.23+nmu1ubuntu1                   deb     
-huggingface-hub            0.14.1                             python  
+huggingface-hub            0.15.1                             python  
 humanfriendly              10.0                               python  
 idna                       3.3                                python  
-imageio                    2.29.0                             python  
+imageio                    2.30.0                             python  
 init-system-helpers        1.65.2                             deb     
 insightface                0.7.3                              python  
 joblib                     1.2.0                              python  
@@ -198,7 +198,7 @@ libsmartcols1              2.38.1-4ubuntu1                    deb
 libsqlite3-0               3.40.1-1                           deb     
 libss2                     1.47.0-1ubuntu1                    deb     
 libssh-4                   0.10.4-2                           deb     
-libssl3                    3.0.8-1ubuntu1.1                   deb     
+libssl3                    3.0.8-1ubuntu1.2                   deb     
 libstdc++-12-dev           12.2.0-17ubuntu1                   deb     
 libstdc++6                 13-20230320-1ubuntu1               deb     
 libsystemd0                252.5-2ubuntu3                     deb     
@@ -252,8 +252,8 @@ nvidia-nccl-cu11           2.14.3                             python
 nvidia-nvtx-cu11           11.7.91                            python  
 onnx                       1.14.0                             python  
 opencv-python-headless     4.7.0.72                           python  
-openssl                    3.0.8-1ubuntu1.1                   deb     
-ort-nightly-gpu            1.16.0.dev20230516003              python  
+openssl                    3.0.8-1ubuntu1.2                   deb     
+ort-nightly-gpu            1.16.0.dev20230531003              python  
 packaging                  23.1                               python  
 passwd                     1:4.13+dfsg1-1ubuntu1              deb     
 perl                       5.36.0-7                           deb     
@@ -263,7 +263,7 @@ pinentry-curses            1.2.1-1ubuntu1                     deb
 pip                        23.0.1                             python  
 prettytable                3.7.0                              python  
 procps                     2:4.0.3-1ubuntu1                   deb     
-protobuf                   4.23.1                             python  
+protobuf                   4.23.2                             python  
 publicsuffix               20230209.2326-1                    deb     
 pydantic                   1.10.4                             python  
 pyparsing                  3.0.9                              python  
