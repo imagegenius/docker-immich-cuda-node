@@ -286,7 +286,7 @@ pipeline {
       }
       steps {
         script{
-          sh '''#! /bin/bash
+          sh '''#!/bin/bash
             WRONG_PERM=$(find ./  -path "./.git" -prune -o \\( -name "run" -o -name "finish" -o -name "check" \\) -not -perm -u=x,g=x,o=x -print)
             if [[ -n "${WRONG_PERM}" ]]; then
               echo "The following S6 service files are missing the executable bit; canceling the faulty build: ${WRONG_PERM}"
@@ -310,7 +310,8 @@ pipeline {
       }
       steps {
         echo "Running on node: ${NODE_NAME}"
-        sh '''#! /bin/bash
+        sh '''#!/bin/bash
+              set -e
               BUILDX_CONTAINER=$(head /dev/urandom | tr -dc 'a-z' | head -c12)
               docker buildx create --driver=docker-container --name=${BUILDX_CONTAINER}
               docker buildx build \
@@ -346,6 +347,7 @@ pipeline {
           steps {
             echo "Running on node: ${NODE_NAME}"
             sh '''#!/bin/bash
+                  set -e
                   BUILDX_CONTAINER=$(head /dev/urandom | tr -dc 'a-z' | head -c12)
                   docker buildx create --driver=docker-container --name=${BUILDX_CONTAINER}
                   docker buildx build \
@@ -377,7 +379,8 @@ pipeline {
             sh '''#!/bin/bash
                   echo $GITHUB_TOKEN | docker login ghcr.io -u ImageGeniusCI --password-stdin
                '''
-            sh '''#! /bin/bash
+            sh '''#!/bin/bash
+                  set -e
                   BUILDX_CONTAINER=$(head /dev/urandom | tr -dc 'a-z' | head -c12)
                   docker buildx create --driver=docker-container --name=${BUILDX_CONTAINER}
                   docker buildx build \
@@ -466,7 +469,7 @@ pipeline {
         environment name: 'EXIT_STATUS', value: ''
       }
       steps {
-        sh '''#! /bin/bash
+        sh '''#!/bin/bash
               echo "Packages were updated. Cleaning up the image and exiting."
               if [ "${MULTIARCH}" == "true" ] && [ "${PACKAGE_CHECK}" == "false" ]; then
                 docker rmi ${GITHUBIMAGE}:amd64-${META_TAG} || :
@@ -490,7 +493,7 @@ pipeline {
         }
       }
       steps {
-        sh '''#! /bin/bash
+        sh '''#!/bin/bash
               echo "There are no package updates. Cleaning up the image and exiting."
               if [ "${MULTIARCH}" == "true" ] && [ "${PACKAGE_CHECK}" == "false" ]; then
                 docker rmi ${GITHUBIMAGE}:amd64-${META_TAG} || :
@@ -703,7 +706,7 @@ pipeline {
         environment name: 'EXIT_STATUS', value: ''
       }
       steps {
-        sh '''#! /bin/bash
+        sh '''#!/bin/bash
             # Function to retrieve JSON data from URL
             get_json() {
               local url="$1"
