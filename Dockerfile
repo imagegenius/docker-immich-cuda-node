@@ -21,13 +21,6 @@ RUN \
     libcurand10 \
     libcufft10 \
     libcudart11.0 \
-    python3-fastapi \
-    python3-nltk \
-    python3-numpy \
-    python3-pil \
-    python3-sentencepiece \
-    python3-tqdm \
-    python3-uvicorn \
     python3-venv && \
   echo "**** download immich ****" && \
   mkdir -p \
