@@ -16,14 +16,12 @@ RUN \
   echo "**** install runtime packages ****" && \
   apt-get update && \
   apt-get install --no-install-recommends -y \
-    g++ \
     libcublas11 \
     libcublaslt11 \
     libcurand10 \
     libcufft10 \
     libcudart11.0 \
-    python3-dev \
-    python3-pip && \
+    python3-venv && \
   echo "**** download immich ****" && \
   mkdir -p \
     /tmp/immich && \
@@ -35,33 +33,13 @@ RUN \
   tar xf \
     /tmp/immich.tar.gz -C \
     /tmp/immich --strip-components=1 && \
-  echo "**** build machine-learning ****" && \
+  echo "**** install machine-learning ****" && \
   cd /tmp/immich/machine-learning && \
-  pip install ${PIP_FLAGS} \
-    insightface \
-    fastapi \
-    nltk \
-    numpy \
-    onnxruntime-gpu \
-    Pillow \
-    scikit-learn \
-    scipy \
-    sentence-transformers \
-    tqdm \
-    transformers \
-    uvicorn[standard] && \
   mkdir -p \
     /app/immich/machine-learning && \
   cp -a \
     src \
     /app/immich/machine-learning && \
-  echo "**** cleanup ****" && \
-  for cleanfiles in *.pyc *.pyo; do \
-    find /usr/local/lib/python3.* /usr/lib/python3.* -name "${cleanfiles}" -delete; \
-  done && \
-  apt-get remove -y --purge \
-    g++ \
-    python3-dev && \
   apt-get autoremove -y --purge && \
   apt-get clean && \
   rm -rf \
