@@ -11,29 +11,15 @@ fi
 # install/update pip packages to /config venv
 source /config/cuda-venv/bin/activate
 
-installed_packages=$(pip list --format=freeze)
+outdated_packages=$(pip list --outdated)
 
-update_needed=false
-
-# go through each package
-while IFS= read -r package; do
-
-  package_name=$(echo "$package" | cut -d'=' -f1)
-  package_version=$(echo "$package" | cut -d'=' -f2)
-
-  latest_version=$(pip search "$package_name" | grep "^$package_name" | awk '{print $2}')
-  if [[ "$latest_version" > "$package_version" ]]; then
-    echo "Package $package_name is outdated. Installed version: $package_version, Latest version: $latest_version"
-    update_needed=true
-  fi
-done <<< "$installed_packages"
-
-# Check if any package needs an update
-if $update_needed; then
+# If there are no outdated packages or no packages installed, print the message
+if [ -z "$outdated_packages" ]; then
     apt-get update
     apt-get install --no-install-recommends -y \
         g++ \
-        python3-dev
+        python3-dev \
+        python3-numpy
     pip install ${PIP_FLAGS} --index-url https://download.pytorch.org/whl/cu117 \
         torch
     pip install ${PIP_FLAGS} \
@@ -66,6 +52,7 @@ done
 # download and install cudnn
 if [ ! -f /config/lib/libcudnn8_8.5.0.96-1+cuda11.7_amd64.deb  ]; then
     rm -f /config/lib/libcudnn*.deb
+    mkdir -p /config/lib
     curl -o  \
         /config/lib/libcudnn8_8.5.0.96-1+cuda11.7_amd64.deb -L \
         https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/libcudnn8_8.5.0.96-1+cuda11.7_amd64.deb
