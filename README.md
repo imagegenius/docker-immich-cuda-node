@@ -5,7 +5,6 @@
 [![GitHub Release](https://img.shields.io/github/release/imagegenius/docker-immich-cuda-node.svg?color=007EC6&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/imagegenius/docker-immich-cuda-node/releases)
 [![GitHub Package Repository](https://shields.io/badge/GitHub%20Package-blue?logo=github&logoColor=ffffff&style=for-the-badge)](https://github.com/imagegenius/docker-immich-cuda-node/packages)
 [![Jenkins Build](https://img.shields.io/jenkins/build?labelColor=555555&logoColor=ffffff&style=for-the-badge&jobUrl=https%3A%2F%2Fci.imagegenius.io%2Fjob%2FDocker-Pipeline-Builders%2Fjob%2Fdocker-immich-cuda-node%2Fjob%2Fmain%2F&logo=jenkins)](https://ci.imagegenius.io/job/Docker-Pipeline-Builders/job/docker-immich-cuda-node/job/main/)
-[![IG CI](https://img.shields.io/badge/dynamic/yaml?color=007EC6&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=CI&query=CI&url=https%3A%2F%2Fci-tests.imagegenius.io%2Fimmich-cuda-node%2Flatest-main%2Fci-status.yml)](https://ci-tests.imagegenius.io/immich-cuda-node/latest-main/index.html)
 
 [immich-cuda-node](https://github.com/imagegenius/docker-immich-cuda-node) is a remote machine leaning worker for Immich
 
