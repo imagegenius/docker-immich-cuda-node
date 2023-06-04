@@ -9,18 +9,17 @@ ARG TORCH_VERSION
 LABEL build_version="ImageGenius Version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="hydazz, martabal"
 
-# environment settings
-ENV PIP_FLAGS="-U --no-cache-dir"
-
 RUN \
   echo "**** install runtime packages ****" && \
   apt-get update && \
   apt-get install --no-install-recommends -y \
+    g++ \
     libcublas11 \
     libcublaslt11 \
-    libcurand10 \
-    libcufft10 \
     libcudart11.0 \
+    libcufft10 \
+    libcurand10 \
+    python3-dev \
     python3-venv && \
   echo "**** download immich ****" && \
   mkdir -p \
@@ -40,6 +39,7 @@ RUN \
   cp -a \
     src \
     /app/immich/machine-learning && \
+  echo "**** cleanup ****" && \
   apt-get autoremove -y --purge && \
   apt-get clean && \
   rm -rf \
@@ -51,10 +51,8 @@ RUN \
 COPY root/ /
 
 # environment settings
-ENV HOME="/config" \
-  MACHINE_LEARNING_CACHE_FOLDER="/config/machine-learning" \
-  TORCH_VERSION=${TORCH_VERSION} \
-  PATH="/config/.local/bin:$PATH"
+ENV MACHINE_LEARNING_CACHE_FOLDER="/config/machine-learning" \
+  TORCH_VERSION=${TORCH_VERSION}
 
 # ports and volumes
 EXPOSE 3003

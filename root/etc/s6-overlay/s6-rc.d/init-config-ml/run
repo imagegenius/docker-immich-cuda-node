@@ -11,13 +11,10 @@ fi
 # install/update pip packages to /config venv
 source /config/cuda-venv/bin/activate
 
-apt-get update
-apt-get install --no-install-recommends -y \
-    g++ \
-    python3-dev
-pip install ${PIP_FLAGS} --index-url https://download.pytorch.org/whl/cu117 \
-    torch
-pip install ${PIP_FLAGS} \
+pip install -U --no-cache-dir --index-url https://download.pytorch.org/whl/cu117 \
+    torch==${TORCH_VERSION}
+
+pip install -U --no-cache-dir \
     fastapi \
     insightface \
     nltk \
@@ -32,28 +29,12 @@ pip install ${PIP_FLAGS} \
     tqdm \
     transformers \
     uvicorn[standard]
-apt-get remove -y --purge \
-    g++ \
-    python3-dev
-apt-get autoremove -y --purge
-apt-get clean
-rm -rf \
-    /tmp/* \
-    /var/tmp/* \
-    /var/lib/apt/lists/*
-
-
-
-echo "**** cleanup ****"
-for cleanfiles in *.pyc *.pyo; do \
-    find /usr/local/lib/python3.* /usr/lib/python3.* -name "${cleanfiles}" -delete; \
-done
 
 # download and install cudnn
-if [ ! -f /config/lib/libcudnn8_8.5.0.96-1+cuda11.7_amd64.deb  ]; then
+if [ ! -f /config/lib/libcudnn8_8.5.0.96-1+cuda11.7_amd64.deb ]; then
     rm -f /config/lib/libcudnn*.deb
     mkdir -p /config/lib
-    curl -o  \
+    curl -o \
         /config/lib/libcudnn8_8.5.0.96-1+cuda11.7_amd64.deb -L \
         https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/libcudnn8_8.5.0.96-1+cuda11.7_amd64.deb
 fi

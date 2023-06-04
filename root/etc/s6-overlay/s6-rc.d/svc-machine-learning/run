@@ -1,7 +1,9 @@
 #!/usr/bin/with-contenv bash
 
 source /config/cuda-venv/bin/activate
+
 export HOME=/tmp
+
 exec \
     s6-notifyoncheck -d -n 300 -w 5000 -c "nc -z localhost 3003" \
         cd /app/immich/machine-learning s6-setuidgid abc \
