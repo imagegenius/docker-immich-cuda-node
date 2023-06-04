@@ -41,7 +41,6 @@ app_setup_block_enabled: true
 app_setup_block: |
   This image is a machine learning worker for Immich, to get started you need to edit your Immich instance to disable its inbuilt machine learning service, and to set the machine learning URL:
 
-  - Add the eviroment variable `DISABLE_MACHINE_LEANRNING=true`.
   - Set `IMMICH_MACHINE_LEARNING_URL` to `http://<ip>:3003`.
 
   To start this image with a GPU, you need to add `--gpus=all` to the docker CLI command, or:
