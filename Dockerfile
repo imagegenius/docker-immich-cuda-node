@@ -5,7 +5,7 @@ FROM ghcr.io/imagegenius/baseimage-ubuntu:jammy
 # set version label
 ARG BUILD_DATE
 ARG VERSION
-ARG TORCH_VERSION
+ARG IMMICH_VERSION
 LABEL build_version="ImageGenius Version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="hydazz, martabal"
 
@@ -24,8 +24,10 @@ RUN \
   echo "**** download immich ****" && \
   mkdir -p \
     /tmp/immich && \
-  IMMICH_VERSION=$(curl -sL https://api.github.com/repos/immich-app/immich/releases/latest | \
-    jq -r '.tag_name'); \
+  if [ -z ${IMMICH_VERSION} ]; then \
+    IMMICH_VERSION=$(curl -sL https://api.github.com/repos/immich-app/immich/releases/latest | \
+      jq -r '.tag_name'); \
+  fi && \
   curl -o \
     /tmp/immich.tar.gz -L \
     "https://github.com/immich-app/immich/archive/${IMMICH_VERSION}.tar.gz" && \
@@ -51,8 +53,7 @@ RUN \
 COPY root/ /
 
 # environment settings
-ENV MACHINE_LEARNING_CACHE_FOLDER="/config/machine-learning" \
-  TORCH_VERSION=${TORCH_VERSION}
+ENV MACHINE_LEARNING_CACHE_FOLDER="/config/machine-learning"
 
 # ports and volumes
 EXPOSE 3003
