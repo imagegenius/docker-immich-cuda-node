@@ -5,6 +5,7 @@
 [![GitHub Release](https://img.shields.io/github/release/imagegenius/docker-immich-cuda-node.svg?color=007EC6&labelColor=555555&logoColor=ffffff&style=for-the-badge&logo=github)](https://github.com/imagegenius/docker-immich-cuda-node/releases)
 [![GitHub Package Repository](https://shields.io/badge/GitHub%20Package-blue?logo=github&logoColor=ffffff&style=for-the-badge)](https://github.com/imagegenius/docker-immich-cuda-node/packages)
 [![Jenkins Build](https://img.shields.io/jenkins/build?labelColor=555555&logoColor=ffffff&style=for-the-badge&jobUrl=https%3A%2F%2Fci.imagegenius.io%2Fjob%2FDocker-Pipeline-Builders%2Fjob%2Fdocker-immich-cuda-node%2Fjob%2Fmain%2F&logo=jenkins)](https://ci.imagegenius.io/job/Docker-Pipeline-Builders/job/docker-immich-cuda-node/job/main/)
+[![IG CI](https://img.shields.io/badge/dynamic/yaml?color=007EC6&labelColor=555555&logoColor=ffffff&style=for-the-badge&label=CI&query=CI&url=https%3A%2F%2Fci-tests.imagegenius.io%2Fimmich-cuda-node%2Flatest-main%2Fci-status.yml)](https://ci-tests.imagegenius.io/immich-cuda-node/latest-main/index.html)
 
 [immich-cuda-node](https://github.com/imagegenius/docker-immich-cuda-node) is a remote machine leaning worker for Immich
 
@@ -26,7 +27,12 @@ This image supports the following architectures:
 
 ## Application Setup
 
-To start the image with a GPU, you need to add `--gpus=all` to the docker CLI command, or:
+This image is a machine learning worker for Immich, to get started you need to edit your Immich instance to disable its inbuilt machine learning service, and to set the machine learning URL:
+
+- Add the eviroment variable `DISABLE_MACHINE_LEANRNING=true`.
+- Set `IMMICH_MACHINE_LEARNING_URL` to `http://<ip>:3003`.
+
+To start this image with a GPU, you need to add `--gpus=all` to the docker CLI command, or:
 
 ```yaml
     deploy:
@@ -88,7 +94,7 @@ To configure the container, pass variables at runtime using the format `<externa
 | `-e PUID=1000` | UID for permissions - see below for explanation |
 | `-e PGID=1000` | GID for permissions - see below for explanation |
 | `-e TZ=Etc/UTC` | Specify a timezone to use, see this [list](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List). |
-| `-v /config` | Location where `torch` (CUDA version) + other larger packages will be installed, which will use ~1.5GB |
+| `-v /config` | Package cache, this folder could potentially use +5GB! |
 
 ## Umask for running applications
 
