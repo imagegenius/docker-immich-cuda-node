@@ -23,7 +23,7 @@ pipeline {
     CONTAINER_NAME = 'immich-cuda-node'
     DIST_IMAGE = 'ubuntu'
     MULTIARCH = 'false'
-    CI = 'true'
+    CI = 'false'
     CI_WEB = 'false'
     CI_PORT = '80'
     CI_SSL = 'false'
