@@ -23,7 +23,6 @@ pip install -U --no-cache-dir \
     onnxruntime-gpu \
     optimum \
     Pillow \
-    pydantic \
     scikit-learn \
     scipy \
     sentencepiece \
