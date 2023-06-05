@@ -71,6 +71,7 @@ libctf0                    2.38-4ubuntu2.2                          deb
 libcublas11                11.7.4.6~11.5.1-1ubuntu1                 deb     
 libcublaslt11              11.7.4.6~11.5.1-1ubuntu1                 deb     
 libcudart11.0              11.5.117~11.5.1-1ubuntu1                 deb     
+libcudnn8                  8.5.0.96-1+cuda11.7                      deb     
 libcufft10                 11.1.1+~10.6.0.107~11.5.1-1ubuntu1       deb     
 libcurand10                11.1.1+~10.2.7.107~11.5.1-1ubuntu1       deb     
 libcurl4                   7.81.0-1ubuntu1.10                       deb     
