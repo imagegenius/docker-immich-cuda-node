@@ -3,7 +3,7 @@
 mkdir -p /config/machine-learning
 
 # apply early ml support
-cp /defaults/main.py /app/immich/machine-learning/src/main.py
+cp /defaults/main.py /app/immich/machine-learning/main.py
 if [ ! -d /config/cuda-venv ]; then
     python3 -m venv /config/cuda-venv/
 fi
