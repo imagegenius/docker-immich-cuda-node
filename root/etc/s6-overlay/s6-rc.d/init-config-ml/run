@@ -15,13 +15,15 @@ pip install -U --no-cache-dir --index-url https://download.pytorch.org/whl/cu117
     torch
 
 pip install -U --no-cache-dir \
+    aiocache \
     fastapi \
     insightface \
     nltk \
     numpy \
     onnxruntime-gpu \
-    packaging \
+    optimum \
     Pillow \
+    pydantic \
     scikit-learn \
     scipy \
     sentencepiece \
@@ -29,6 +31,8 @@ pip install -U --no-cache-dir \
     tqdm \
     transformers \
     uvicorn[standard]
+pip install -U --no-cache-dir nvidia-pyindex
+pip install -U --no-cache-dir onnx-graphsurgeon
 
 # permissions
 chown -R abc:abc \
