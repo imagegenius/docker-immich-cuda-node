@@ -21,6 +21,10 @@ RUN \
     libcurand10 \
     python3-dev \
     python3-venv && \
+  curl -o \
+    /tmp/libcudnn.deb -L \
+    https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/libcudnn8_8.5.0.96-1+cuda11.7_amd64.deb && \
+  dpkg -i /tmp/libcudnn.deb && \
   echo "**** download immich ****" && \
   mkdir -p \
     /tmp/immich && \
@@ -53,7 +57,8 @@ RUN \
 COPY root/ /
 
 # environment settings
-ENV MACHINE_LEARNING_CACHE_FOLDER="/config/machine-learning"
+ENV MACHINE_LEARNING_CACHE_FOLDER="/config/machine-learning" \
+  CUDA_ACCELERATION="true"
 
 # ports and volumes
 EXPOSE 3003
