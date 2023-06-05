@@ -30,16 +30,6 @@ pip install -U --no-cache-dir \
     transformers \
     uvicorn[standard]
 
-# download and install cudnn
-if [ ! -f /config/lib/libcudnn8_8.5.0.96-1+cuda11.7_amd64.deb ]; then
-    rm -f /config/lib/libcudnn*.deb
-    mkdir -p /config/lib
-    curl -o \
-        /config/lib/libcudnn8_8.5.0.96-1+cuda11.7_amd64.deb -L \
-        https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/libcudnn8_8.5.0.96-1+cuda11.7_amd64.deb
-fi
-dpkg -i /config/lib/libcudnn8_8.5.0.96-1+cuda11.7_amd64.deb
-
 # permissions
 chown -R abc:abc \
     /config \
