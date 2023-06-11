@@ -21,7 +21,6 @@ pip install -U --no-cache-dir \
     nltk \
     numpy \
     onnxruntime-gpu \
-    optimum \
     Pillow \
     scikit-learn \
     scipy \
@@ -30,8 +29,6 @@ pip install -U --no-cache-dir \
     tqdm \
     transformers \
     uvicorn[standard]
-pip install -U --no-cache-dir nvidia-pyindex
-pip install -U --no-cache-dir onnx-graphsurgeon
 
 # permissions
 chown -R abc:abc \
