@@ -11,9 +11,6 @@ fi
 # install/update pip packages to /config venv
 source /config/cuda-venv/bin/activate
 
-pip install -U --no-cache-dir --index-url https://download.pytorch.org/whl/cu117 \
-    torch
-
 pip install -U --no-cache-dir \
     aiocache \
     fastapi \
@@ -26,11 +23,13 @@ pip install -U --no-cache-dir \
     scipy \
     sentencepiece \
     sentence-transformers \
+    toch \
     tqdm \
     transformers \
     uvicorn[standard]
 
 # permissions
 chown -R abc:abc \
+    /photos \
     /config \
     /app
