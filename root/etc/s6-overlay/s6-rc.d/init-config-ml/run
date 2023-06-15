@@ -23,7 +23,7 @@ pip install -U --no-cache-dir \
     scipy \
     sentencepiece \
     sentence-transformers \
-    toch \
+    torch \
     tqdm \
     transformers \
     uvicorn[standard]
@@ -31,5 +31,4 @@ pip install -U --no-cache-dir \
 # permissions
 chown -R abc:abc \
     /photos \
-    /config \
-    /app
+    /config
