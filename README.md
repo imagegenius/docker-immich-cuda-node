@@ -26,15 +26,31 @@ This image supports the following architectures:
 
 ## Application Setup
 
-This image is a machine learning worker for Immich, to get started you need to edit your Immich instance to disable its inbuilt machine learning service, and to set the machine learning URL:
+To start, you will need to modify your Immich instance by disabling its built-in machine learning service.
 
-- Make sure `CUDA_ACCELERATION` is set to false
+On your main Immich container, set the necessary environment variables:
+
+- Set `CUDA_ACCELERATION` to `false`. This will disable CUDA acceleration.
 - Set `IMMICH_MACHINE_LEARNING_URL` to `http://<ip>:3003`.
 
-To start this image with a GPU, you need to add `--gpus=all` to the docker CLI command, or:
+`/photos` volume path containing your Immich assets must be reachable by the worker.
+
+Replace `<ip>` with the IP address of your immich-cuda-node container/host.
+
+## Enabling GPU Acceleration with this container
+
+To start this image with GPU support, you need to modify your Docker settings.
+
+If you're using the Docker CLI, add the `--gpus=all` flag to your command.
+
+```sh
+docker run --gpus=all ...
+```
+
+If you're using Docker Compose, add the following under your service:
 
 ```yaml
-    deploy:
+  deploy:
     resources:
       reservations:
         devices:
@@ -42,7 +58,7 @@ To start this image with a GPU, you need to add `--gpus=all` to the docker CLI c
             capabilities: [gpu]
 ```
 
-to your docker compose
+This will reserve all available GPUs for your container, using the NVIDIA driver.
 
 ## Usage
 
@@ -63,6 +79,7 @@ services:
       - TZ=Etc/UTC
     volumes:
       - path_to_appdata:/config
+      - path_to_photos:/photos
     ports:
       - 3003:3003
     restart: unless-stopped
@@ -78,6 +95,7 @@ docker run -d \
   -e TZ=Etc/UTC \
   -p 3003:3003 \
   -v path_to_appdata:/config \
+  -v path_to_photos:/photos \
   --restart unless-stopped \
   ghcr.io/imagegenius/immich-cuda-node:latest
 
@@ -94,6 +112,7 @@ To configure the container, pass variables at runtime using the format `<externa
 | `-e PGID=1000` | GID for permissions - see below for explanation |
 | `-e TZ=Etc/UTC` | Specify a timezone to use, see this [list](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List). |
 | `-v /config` | Package cache, this folder could potentially use +5GB! |
+| `-v /photos` | Contains all the photos uploaded to Immich |
 
 ## Umask for running applications
 
