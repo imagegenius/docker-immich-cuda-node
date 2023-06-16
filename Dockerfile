@@ -32,18 +32,14 @@ RUN \
     IMMICH_VERSION=$(curl -sL https://api.github.com/repos/immich-app/immich/releases/latest | \
       jq -r '.tag_name'); \
   fi && \
-  curl -o \
-    /tmp/immich.tar.gz -L \
-    "https://github.com/immich-app/immich/archive/${IMMICH_VERSION}.tar.gz" && \
-  tar xf \
-    /tmp/immich.tar.gz -C \
-    /tmp/immich --strip-components=1 && \
+  curl -sL "https://github.com/mertalev/immich/archive/ml-ray.tar.gz" -o /tmp/immich.tar.gz && \
+	tar xf /tmp/immich.tar.gz -C /tmp/immich --strip-components=1 && \
   echo "**** install machine-learning ****" && \
   cd /tmp/immich/machine-learning && \
   mkdir -p \
     /app/immich/machine-learning && \
   cp -a \
-    app/. \
+    app \
     /app/immich/machine-learning && \
   echo "**** cleanup ****" && \
   apt-get autoremove -y --purge && \

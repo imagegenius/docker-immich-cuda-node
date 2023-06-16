@@ -19,6 +19,7 @@ pip install -U --no-cache-dir \
     numpy \
     onnxruntime-gpu \
     Pillow \
+    ray[serve] \
     scikit-learn \
     scipy \
     sentencepiece \
