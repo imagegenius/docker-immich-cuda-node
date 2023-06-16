@@ -3,7 +3,7 @@
 mkdir -p /config/machine-learning
 
 # apply early ml support
-cp /defaults/main.py /app/immich/machine-learning/src/main.py
+cp /defaults/main.py /app/immich/machine-learning/main.py
 if [ ! -d /config/cuda-venv ]; then
     python3 -m venv /config/cuda-venv/
 fi
@@ -11,26 +11,24 @@ fi
 # install/update pip packages to /config venv
 source /config/cuda-venv/bin/activate
 
-pip install -U --no-cache-dir --index-url https://download.pytorch.org/whl/cu117 \
-    torch
-
 pip install -U --no-cache-dir \
+    aiocache \
     fastapi \
     insightface \
     nltk \
     numpy \
     onnxruntime-gpu \
-    packaging \
     Pillow \
     scikit-learn \
     scipy \
     sentencepiece \
     sentence-transformers \
+    torch \
     tqdm \
     transformers \
     uvicorn[standard]
 
 # permissions
 chown -R abc:abc \
-    /config \
-    /app
+    /photos \
+    /config

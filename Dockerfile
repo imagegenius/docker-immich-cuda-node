@@ -43,7 +43,7 @@ RUN \
   mkdir -p \
     /app/immich/machine-learning && \
   cp -a \
-    src \
+    app/. \
     /app/immich/machine-learning && \
   echo "**** cleanup ****" && \
   apt-get autoremove -y --purge && \
@@ -57,8 +57,7 @@ RUN \
 COPY root/ /
 
 # environment settings
-ENV MACHINE_LEARNING_CACHE_FOLDER="/config/machine-learning" \
-  CUDA_ACCELERATION="true"
+ENV MACHINE_LEARNING_CACHE_FOLDER="/config/machine-learning"
 
 # ports and volumes
 EXPOSE 3003

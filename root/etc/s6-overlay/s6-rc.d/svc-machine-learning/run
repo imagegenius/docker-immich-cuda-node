@@ -7,4 +7,4 @@ export HOME=/tmp
 exec \
     s6-notifyoncheck -d -n 300 -w 5000 -c "nc -z localhost 3003" \
         cd /app/immich/machine-learning s6-setuidgid abc \
-            python3 src/main.py
+            python3 main.py
