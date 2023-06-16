@@ -53,8 +53,7 @@ RUN \
 COPY root/ /
 
 # environment settings
-ENV MACHINE_LEARNING_CACHE_FOLDER="/config/machine-learning" \
-  CUDA_ACCELERATION="true"
+ENV MACHINE_LEARNING_CACHE_FOLDER="/config/machine-learning"
 
 # ports and volumes
 EXPOSE 3003
