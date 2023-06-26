@@ -43,7 +43,7 @@ RUN \
   mkdir -p \
     /app/immich/machine-learning && \
   cp -a \
-    app/. \
+    app \
     /app/immich/machine-learning && \
   echo "**** cleanup ****" && \
   apt-get autoremove -y --purge && \
