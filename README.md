@@ -50,12 +50,12 @@ docker run --gpus=all ...
 If you're using Docker Compose, add the following under your service:
 
 ```yaml
-  deploy:
-    resources:
-      reservations:
-        devices:
-          - driver: nvidia
-            capabilities: [gpu]
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
 ```
 
 This will reserve all available GPUs for your container, using the NVIDIA driver.
