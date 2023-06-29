@@ -323,6 +323,7 @@ pipeline {
         sh '''#!/bin/bash
               set -e
               BUILDX_CONTAINER=$(head /dev/urandom | tr -dc 'a-z' | head -c12)
+              trap 'docker buildx rm ${BUILDX_CONTAINER}' EXIT
               docker buildx create --driver=docker-container --name=${BUILDX_CONTAINER}
               docker buildx build \
                 --label \"org.opencontainers.image.created=${GITHUB_DATE}\" \
@@ -337,9 +338,8 @@ pipeline {
                 --label \"org.opencontainers.image.title=Immich-cuda-node\" \
                 --label \"org.opencontainers.image.description=immich-cuda-node is a remote machine leaning worker for Immich\" \
                 --no-cache --pull -t ${GITHUBIMAGE}:${META_TAG} --platform=linux/amd64 \
-                --build-arg ${BUILD_VERSION_ARG}=${EXT_RELEASE} --build-arg VERSION=\"${VERSION_TAG}\" --build-arg BUILD_DATE=${GITHUB_DATE} . \
-                --builder=${BUILDX_CONTAINER} --load
-              docker buildx rm ${BUILDX_CONTAINER}
+                --build-arg ${BUILD_VERSION_ARG}=${EXT_RELEASE} --build-arg VERSION=\"${VERSION_TAG}\" --build-arg BUILD_DATE=${GITHUB_DATE} \
+                --builder=${BUILDX_CONTAINER} --load .
            '''
       }
     }
@@ -359,6 +359,7 @@ pipeline {
             sh '''#!/bin/bash
                   set -e
                   BUILDX_CONTAINER=$(head /dev/urandom | tr -dc 'a-z' | head -c12)
+                  trap 'docker buildx rm ${BUILDX_CONTAINER}' EXIT
                   docker buildx create --driver=docker-container --name=${BUILDX_CONTAINER}
                   docker buildx build \
                     --label \"org.opencontainers.image.created=${GITHUB_DATE}\" \
@@ -373,9 +374,8 @@ pipeline {
                     --label \"org.opencontainers.image.title=Immich-cuda-node\" \
                     --label \"org.opencontainers.image.description=immich-cuda-node is a remote machine leaning worker for Immich\" \
                     --no-cache --pull -t ${GITHUBIMAGE}:amd64-${META_TAG} --platform=linux/amd64 \
-                    --build-arg ${BUILD_VERSION_ARG}=${EXT_RELEASE} --build-arg VERSION=\"${VERSION_TAG}\" --build-arg BUILD_DATE=${GITHUB_DATE} . \
-                    --builder=${BUILDX_CONTAINER} --load
-                  docker buildx rm ${BUILDX_CONTAINER}
+                    --build-arg ${BUILD_VERSION_ARG}=${EXT_RELEASE} --build-arg VERSION=\"${VERSION_TAG}\" --build-arg BUILD_DATE=${GITHUB_DATE} \
+                    --builder=${BUILDX_CONTAINER} --load .
                '''
           }
         }
@@ -392,6 +392,7 @@ pipeline {
             sh '''#!/bin/bash
                   set -e
                   BUILDX_CONTAINER=$(head /dev/urandom | tr -dc 'a-z' | head -c12)
+                  trap 'docker buildx rm ${BUILDX_CONTAINER}' EXIT
                   docker buildx create --driver=docker-container --name=${BUILDX_CONTAINER}
                   docker buildx build \
                     --label \"org.opencontainers.image.created=${GITHUB_DATE}\" \
@@ -406,9 +407,8 @@ pipeline {
                     --label \"org.opencontainers.image.title=Immich-cuda-node\" \
                     --label \"org.opencontainers.image.description=immich-cuda-node is a remote machine leaning worker for Immich\" \
                     --no-cache --pull -f Dockerfile.aarch64 -t ${GITHUBIMAGE}:arm64v8-${META_TAG} --platform=linux/arm64 \
-                    --build-arg ${BUILD_VERSION_ARG}=${EXT_RELEASE} --build-arg VERSION=\"${VERSION_TAG}\" --build-arg BUILD_DATE=${GITHUB_DATE} . \
-                    --builder=${BUILDX_CONTAINER} --load
-                  docker buildx rm ${BUILDX_CONTAINER}
+                    --build-arg ${BUILD_VERSION_ARG}=${EXT_RELEASE} --build-arg VERSION=\"${VERSION_TAG}\" --build-arg BUILD_DATE=${GITHUB_DATE} \
+                    --builder=${BUILDX_CONTAINER} --load .
                '''
             sh "docker tag ${GITHUBIMAGE}:arm64v8-${META_TAG} ghcr.io/imagegenius/igdev-buildcache:arm64v8-${COMMIT_SHA}-${BUILD_NUMBER}"
             retry(5) {
@@ -813,7 +813,8 @@ pipeline {
                    docker rmi ${GITHUBIMAGE}:arm64v8-${META_TAG} || :
                  else
                    docker rmi ${GITHUBIMAGE}:${META_TAG} || :
-                 fi'''
+                 fi
+            '''
         }
       }
     }
