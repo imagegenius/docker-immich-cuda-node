@@ -13,7 +13,6 @@ pip install -U --no-cache-dir \
     aiocache \
     fastapi \
     insightface \
-    nltk \
     numpy \
     onnxruntime-gpu \
     Pillow \
@@ -28,5 +27,4 @@ pip install -U --no-cache-dir \
 
 # permissions
 chown -R abc:abc \
-    /photos \
     /config
