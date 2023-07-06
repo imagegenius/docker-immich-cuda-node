@@ -19,7 +19,6 @@ param_usage_include_env: false
 param_usage_include_vols: true
 param_volumes:
   - { vol_path: "/config", vol_host_path: "path_to_appdata", desc: "Package cache, this folder could potentially use +5GB!" }
-  - { vol_path: "/photos", vol_host_path: "path_to_photos", desc: "Contains all the photos uploaded to Immich" }
 param_usage_include_ports: true
 param_ports:
   - { external_port: "3003", internal_port: "3003", port_desc: "WebUI Port" }
@@ -46,8 +45,6 @@ app_setup_block: |
 
   - Set `CUDA_ACCELERATION` to `false`. This will disable CUDA acceleration.
   - Set `IMMICH_MACHINE_LEARNING_URL` to `http://<ip>:3003`.
-
-  `/photos` volume path containing your Immich assets must be reachable by the worker.
 
   Replace `<ip>` with the IP address of your immich-cuda-node container/host.
 
