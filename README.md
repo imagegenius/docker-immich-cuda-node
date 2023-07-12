@@ -33,8 +33,6 @@ On your main Immich container, set the necessary environment variables:
 - Set `CUDA_ACCELERATION` to `false`. This will disable CUDA acceleration.
 - Set `IMMICH_MACHINE_LEARNING_URL` to `http://<ip>:3003`.
 
-`/photos` volume path containing your Immich assets must be reachable by the worker.
-
 Replace `<ip>` with the IP address of your immich-cuda-node container/host.
 
 ## Enabling GPU Acceleration with this container
@@ -79,7 +77,6 @@ services:
       - TZ=Etc/UTC
     volumes:
       - path_to_appdata:/config
-      - path_to_photos:/photos
     ports:
       - 3003:3003
     restart: unless-stopped
@@ -95,7 +92,6 @@ docker run -d \
   -e TZ=Etc/UTC \
   -p 3003:3003 \
   -v path_to_appdata:/config \
-  -v path_to_photos:/photos \
   --restart unless-stopped \
   ghcr.io/imagegenius/immich-cuda-node:latest
 
@@ -112,7 +108,6 @@ To configure the container, pass variables at runtime using the format `<externa
 | `-e PGID=1000` | GID for permissions - see below for explanation |
 | `-e TZ=Etc/UTC` | Specify a timezone to use, see this [list](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List). |
 | `-v /config` | Package cache, this folder could potentially use +5GB! |
-| `-v /photos` | Contains all the photos uploaded to Immich |
 
 ## Umask for running applications
 
